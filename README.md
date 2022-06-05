@@ -19,7 +19,7 @@ At the moment, the library is tailored to my personal needs, as such some of the
 
 This library is (not yet) published. However, you can publish it to the local Ivy repository in order to use it yourself. In order to do this, you can run `sbt publishLocal` which triggers a build of the library and publishes it to the local Ivy repository.
 
-## Creating a configuration file
+### Creating a configuration file
 
 The intended usage is through [Ammonite](https://ammonite.io/) such that you can write down your Kubernetes configuration using a Scala script.
 
@@ -34,10 +34,10 @@ object WhoamiDeployment extends ExposedDeployment:
   override def mapping = Map(
     "web" -> "whoami.example.com"
   )
-  override def labels = Map("app" -> "whoami2")
+  override def labels = Map("app" -> "whoami")
   override def containers: List[Container] = 
     List(Container(
-      name = "whoami2-container",
+      name = "whoami-container",
       image = "containous/whoami",
       ports = List(Port(name = "web", port = 80))
     ))
