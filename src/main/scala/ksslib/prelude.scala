@@ -38,7 +38,11 @@ package prelude {
     def aggregate(configs: Seq[Config]): Config =
       AggregateConfig(configs.toList)
 
-  case class Volume(mountPath: String, name: String)
+  case class Volume(
+      mountPath: String,
+      name: String,
+      subPath: Option[String] = None
+  )
   case class Container(
       name: String,
       image: String,
@@ -98,7 +102,12 @@ package prelude {
                 .toArray,
               "volumeMounts" -> container.volumes
                 .map(mount =>
-                  Map("mountPath" -> mount.mountPath, "name" -> mount.name)
+                  Map(
+                    "mountPath" -> mount.mountPath,
+                    "name" -> mount.name
+                  ) ++ (if mount.subPath.isDefined then
+                          Set(("subPath" -> mount.subPath.get))
+                        else Set())
                 )
                 .toArray
             ),
